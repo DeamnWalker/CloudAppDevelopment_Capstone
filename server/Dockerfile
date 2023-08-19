@@ -1,4 +1,4 @@
-FROM python:3.8.2
+    FROM python:3.8.2
 
     ENV PYTHONBUFFERED 1
     ENV PYTHONWRITEBYTECODE 1
@@ -6,7 +6,7 @@ FROM python:3.8.2
     RUN apt-get update \
         && apt-get install -y netcat
 
-    ENV APP=/server
+    ENV APP=/app
 
     # Change the workdir.
     WORKDIR $APP
@@ -21,7 +21,7 @@ FROM python:3.8.2
 
     EXPOSE 8000
 
-    RUN chmod +x /server/entrypoint.sh
-    ENTRYPOINT ["/server/entrypoint.sh"]
+    RUN chmod +x /app/entrypoint.sh
+    ENTRYPOINT ["/app/entrypoint.sh"]
 
     CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "djangobackend.wsgi"]
